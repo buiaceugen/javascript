@@ -7,6 +7,7 @@ import {Loader} from './Loader.js';
 export function Index() {
     const scripts = {
         application: '../Core/Application.js',
+        url: '../Core/Classes/Url/UrlClass.js',
         routes: '../Config/Routes/Routes.js'
     }
     let scriptPath = '';
