@@ -1,10 +1,27 @@
 class UrlClass {
-    constructor(data) {
-        this.parseUrl(data.url);
+
+    /**
+     *
+     * @param url
+     */
+    constructor(url) {
+        this.urlData = url;
     }
 
-    parseUrl(url) {
-        let match = url.match(/^(([^:\/?#]+:)?\/\/((?:([^\/?#:]*):([^\/?#:]*)@)?([^\/?#:]*)(?::([^\/?#:]*))?))?([^?#]*)(\?[^#]*)?(#.*)?$/),
+    /**
+     *
+     * @returns {{hostname: string, protocol: string, search: string, password: string, port: string, origin: string, host: string, href: string, hash: string, pathname: (string), username: string}}
+     */
+    get url() {
+        return this.parseUrl();
+    }
+
+    /**
+     *
+     * @returns {{hostname: string, protocol: string, search: string, password: string, port: string, origin: string, host: string, href: string, hash: string, pathname: (string), username: string}}
+     */
+    parseUrl() {
+        let match = this.urlData.match(/^(([^:\/?#]+:)?\/\/((?:([^\/?#:]*):([^\/?#:]*)@)?([^\/?#:]*)(?::([^\/?#:]*))?))?([^?#]*)(\?[^#]*)?(#.*)?$/),
             response = {
                 hash: match[10] || "",                   // #asd
                 host: match[3] || "",                    // localhost:257
@@ -23,20 +40,7 @@ class UrlClass {
             response.origin = response.protocol + "//" + response.host;
         }
         response.href = response.origin + response.pathname + response.search + response.hash;
-        console.log(response);
+
         return response;
     }
-}
-
-
-let string = document.readyState;
-if (string === "loading") {
-    //The document is still loading.
-} else if (string === "interactive") {
-    //The document has finished loading. We can now access the DOM elements.
-    //But sub-resources such as scripts, images, stylesheets and frames are still loading.
-    let url = document.getElementById("url").innerHTML = location.href;
-    new UrlClass({url: url});
-} else if (string === "complete") {// The page is fully loaded.
-    //The page is fully loaded.
 }
